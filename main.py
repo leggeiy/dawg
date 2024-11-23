@@ -1,4 +1,7 @@
 
+# test-bot(bot class)
+# This example requires the 'members' and 'message_content' privileged intents to function.
+
 import discord
 import random
 import os
@@ -60,6 +63,10 @@ async def repeat(ctx, times: int, content='repeating...'):
 async def pw(ctx):
     await ctx.send(f'Kata sandi yang dihasilkan: {gen_pass(10)}')
 
+@bot.command()
+async def help(ctx):
+    await ctx.send(f'if you need help, contact nownotnow2000@proton.me, this bot is (mostly) not my code')
+
 # coinflip
 @bot.command()
 async def coinflip(ctx):
@@ -101,6 +108,5 @@ async def joined(ctx, member: discord.Member):
     """Says when a member joined."""
     await ctx.send(f'{member.name} joined {discord.utils.format_dt(member.joined_at)}') # type: ignore
     # provide what you can help here
-
 
 bot.run('haha you thought')
