@@ -1,6 +1,8 @@
 # test-bot(bot class)
 # This example requires the 'members' and 'message_content' privileged intents to function.
 
+from logic_poke import Pokemon
+import requests
 import discord
 import random
 import os
@@ -24,6 +26,26 @@ async def on_ready():
     print(f'Logged in as {bot.user} (ID: {bot.user.id})') # type: ignore
     print('------')
 
+@bot.command()
+async def rawr(ctx):
+    await ctx.send("RAWR")
+    await ctx.send("you found an easter egg!")
+
+@bot.command()
+async def miau(ctx):
+    await ctx.send("https://youtu.be/AkufJdMjnyU?si=FzcqJQuotfsJJZ_Q")
+    await ctx.send("you found an easter egg!")
+
+@bot.command()
+async def aboutblank(ctx):
+    await ctx.send("about:blank")
+    await ctx.send("you found an easter egg!")
+
+@bot.command()
+async def brotha(ctx):
+    await ctx.send("https://www.youtube.com/watch?v=wLg04uu2j2o")
+    await ctx.send("you found an easter egg!")
+
 # adding two numbers
 @bot.command()
 async def add(ctx, left: int, right: int):
@@ -39,6 +61,22 @@ async def subtract(ctx, left: int, right: int):
 async def div(ctx, left: int, right: int):
     """Adds two numbers together."""
     await ctx.send(left / right)
+
+# The '$go' command
+@bot.command()
+async def go(ctx):
+    author = ctx.author.name  # Getting the name of the message's author
+    # Check whether the user already has a Pokémon. If not, then...
+    # if author not in Pokemon.pokemons.keys():
+    pokemon = Pokemon(author)  # Creating a new Pokémon
+    await ctx.send(await pokemon.info())  # Sending information about the Pokémon
+    image_url = await pokemon.show_img()  # Getting the URL of the Pokémon image
+    if image_url:
+        embed = discord.Embed()  # Creating an embed message
+        embed.set_image(url=image_url)  # Setting up the Pokémon's image
+        await ctx.send(embed=embed)  # Sending an embedded message with an image
+    else:
+        await ctx.send("Failed to upload an image of the pokémon.")
 
 @bot.command()
 async def multiply(ctx, left: int, right: int):
@@ -57,6 +95,32 @@ async def repeat(ctx, times: int, content='repeating...'):
     for i in range(times):
         await ctx.send(content)
         
+
+# API to get random dog and duck image 
+def get_dog_image_url():
+    url = 'https://random.dog/woof.json'
+    res = requests.get(url)
+    data = res.json()
+    return data['url']
+
+@bot.command('dog')
+async def dog(ctx):
+    '''Setiap kali permintaan dog (anjing) dipanggil, program memanggil fungsi get_dog_image_url'''
+    image_url = get_dog_image_url()
+    await ctx.send(image_url)
+
+
+def get_duck_image_url():
+    url = 'https://random-d.uk/api/random'
+    res = requests.get(url)
+    data = res.json()
+    return data['url']
+
+@bot.command('duck')
+async def duck(ctx):
+    '''Setiap kali permintaan duck (bebek) dipanggil, program memanggil fungsi get_duck_image_url'''
+    image_url = get_duck_image_url()
+    await ctx.send(image_url)
 
 # overwriting kalimat.txt
 @bot.command()
@@ -151,4 +215,4 @@ async def joined(ctx, member: discord.Member):
     # provide what you can help here
 
 
-bot.run('lol insert you code')
+bot.run('LaLaLALAlAl12LAlAlAlla')
