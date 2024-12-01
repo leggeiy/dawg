@@ -1,4 +1,3 @@
-
 # test-bot(bot class)
 # This example requires the 'members' and 'message_content' privileged intents to function.
 
@@ -58,13 +57,55 @@ async def repeat(ctx, times: int, content='repeating...'):
     for i in range(times):
         await ctx.send(content)
         
+
+# overwriting kalimat.txt
+@bot.command()
+async def tulis(ctx, *, my_string: str):
+    with open('kalimat.txt', 'w', encoding='utf-8') as t:
+        text = ""
+        text += my_string
+        t.write(text)
+# append kalimat.txt
+@bot.command()
+async def tambahkan(ctx, *, my_string: str):
+    with open('kalimat.txt', 'a', encoding='utf-8') as t:
+        text = "\n"
+        text += my_string
+        t.write(text)
+# reading kalimat.txt
+@bot.command()
+async def baca(ctx):
+    with open('kalimat.txt', 'r', encoding='utf-8') as t:
+        document = t.read()
+        await ctx.send(document)
+
+# random local meme image
+@bot.command()
+async def meme(ctx):
+    img_name = random.choice(os.listdir('meme'))
+    with open(f'meme/{img_name}', 'rb') as f:
+    # with open(f'meme/enemies-meme.jpg', 'rb') as f:
+        # Mari simpan file perpustakaan/library Discord yang dikonversi dalam variabel ini!
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+
+@bot.command()
+async def animeme(ctx):
+    img_name = random.choice(os.listdir('tnbg'))
+    with open(f'tnbg/{img_name}', 'rb') as f:
+    # with open(f'meme/enemies-meme.jpg', 'rb') as f:
+        # Mari simpan file perpustakaan/library Discord yang dikonversi dalam variabel ini!
+        picture = discord.File(f)
+    await ctx.send(file=picture)
+
+
 # password generator        
 @bot.command()
 async def pw(ctx):
     await ctx.send(f'Kata sandi yang dihasilkan: {gen_pass(10)}')
 
 @bot.command()
-async def help(ctx):
+async def sos(ctx):
     await ctx.send(f'if you need help, contact nownotnow2000@proton.me, this bot is (mostly) not my code')
 
 # coinflip
@@ -109,4 +150,5 @@ async def joined(ctx, member: discord.Member):
     await ctx.send(f'{member.name} joined {discord.utils.format_dt(member.joined_at)}') # type: ignore
     # provide what you can help here
 
-bot.run('haha you thought')
+
+bot.run('lol insert you code')
