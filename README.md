@@ -2,14 +2,14 @@
 a discord bot, made for my python course
 
 
-#more-info
+more-info
 this is D)!
 and yes, its said as d shield minus
 its cool
 it can do stuff like rolling dice and flipping coins
 but there is also easter eggs
 
-#commands
+commands
 (excluding eastsers)
 add (adds numbers)
 subtract (subtracts numbers)
