@@ -1,6 +1,8 @@
 # test-bot(bot class)
 # This example requires the 'members' and 'message_content' privileged intents to function.
 
+#sng = me and me = sng
+
 from logic_poke import Pokemon
 import requests
 import discord
@@ -8,11 +10,15 @@ import random
 import os
 from discord.ext import commands
 from bot_logic import gen_pass
+from detect_objects import detect
+from model import get_class
 
 description = '''An example bot to showcase the discord.ext.commands extension
 module.
 
 There are a number of utility commands being showcased here.'''
+
+yummyeyes = "i see the eyes"
 
 intents = discord.Intents.default()
 intents.members = True
@@ -62,6 +68,42 @@ async def div(ctx, left: int, right: int):
     """Adds two numbers together."""
     await ctx.send(left / right)
 
+@bot.command()
+async def rockpaperscissors(ctx, hand):
+    hands = ["rock", "paper", "scissors"]
+    machine = random.choice(hands)
+    phand = hand.lower()
+    await ctx.send(machine)
+    if machine == phand:
+        await ctx.send("tie")
+    elif (machine == "rock" and phand == "paper") or (machine == "paper" and phand == "scissors") or (machine == "scissors" and phand == "rock"):
+        await ctx.send("you win W")
+    elif (phand == "rock" and machine == "paper") or (phand == "paper" and machine == "scissors") or (phand == "scissors" and machine == "rock"):
+        await ctx.send("you lose L")
+    else:
+        await ctx.send("pluh")
+    
+@bot.command()
+async def hangman(ctx):
+    if IsGameStarted != 1:
+        words = ["name", "discord", "superb", "pneumonoultramicroscopicsilicovolcanoconiosis", "Methionylglutaminylarginyltyrosylglutamylserylleucylphenylalanylvalylprolylphenylalanylvalylthreonylleucylglycylaspartylprolylglycylisoleucylglutamylglutaminylserylleucyllysylisoleucylaspartylthreonylleucylisoleucylglutamylalanylglycylalanylaspartylalanylleucylglutamylleucylglycylisoleucylprolylphenylalanylserylaspartylprolylleucylalanylaspartylglycylprolylthreonylisoleucylglutaminylasparaginylalanylthreonylleucylarginylalanylphenylalanylalanylalanylglycylvalylthreonylprolylalanylglutaminylcysteinylphenylalanylglutamylmethionylleucylalanylleucylisoleucylarginylglutaminyllysylhistidylprolylthreonylisoleucylprolylisoleucylglycylleucylleucylmethionyltyrosylalanylasparaginylleucylvalylphenylalanylasparaginyllysylglycylisoleucylaspartylglutamylphenylalanyltyrosylalanylglutaminylcysteinylglutamyllysylvalylglycylvalylaspartylserylvalylleucylvalylalanylaspartylvalylprolylvalylglutaminylglutamylserylalanylprolylphenylalanylarginylglutaminylalanylalanylleucylarginylhistidylasparaginylvalylalanylprolylisoleucylphenylalanylisoleucylcysteinylprolylprolylaspartylalanylaspartylaspartylaspartylleucylleucylarginylglutaminylisoleucylalanylseryltyrosylglycylarginylglycyltyrosylthreonyltyrosylleucylleucylserylarginylalanylglycylvalylthreonylglycylalanylglutamylasparaginylarginylalanylalanylleucylprolylleucylasparaginylhistidylleucylvalylalanyllysylleucyllysylglutamyltyrosylasparaginylalanylalanylprolylprolylleucylglutaminylglycylphenylalanylglycylisoleucylserylalanylprolylaspartylglutaminylvalyllysylalanylalanylisoleucylaspartylalanylglycylalanylalanylglycylalanylisoleucylserylglycylserylalanylisoleucylvalyllysylisoleucylisoleucylglutamylglutaminylhistidylasparaginylisoleucylglutamylprolylglutamyllysylmethionylleucylalanylalanylleucyllysylvalylphenylalanylvalylglutaminylprolylmethionyllysylalanylalanylthreonylarginylacetylseryltyrosylserylisoleucylthreonylserylprolylserylglutaminylphenylalanylvalylphenylalanylleucylserylserylvalyltryptophylalanylaspartylprolylisoleucylglutamylleucylleucylasparaginylvalylcysteinylthreonylserylserylleucylglycylasparaginylglutaminylphenylalanylglutaminylthreonylglutaminylglutaminylalanylarginylthreonylthreonylglutaminylvalylglutaminylglutaminylphenylalanylserylglutaminylvalyltryptophyllysylprolylphenylalanylprolylglutaminylserylthreonylvalylarginylphenylalanylprolylglycylaspartylvalyltyrosyllysylvalyltyrosylarginyltyrosylasparaginylalanylvalylleucylaspartylprolylleucylisoleucylthreonylalanylleucylleucylglycylthreonylphenylalanylaspartylthreonylarginylasparaginylarginylisoleucylisoleucylglutamylvalylglutamylasparaginylglutaminylglutaminylserylprolylthreonylthreonylalanylglutamylthreonylleucylaspartylalanylthreonylarginylarginylvalylaspartylaspartylalanylthreonylvalylalanylisoleucylarginylserylalanylasparaginylisoleucylasparaginylleucylvalylasparaginylglutamylleucylvalylarginylglycylthreonylglycylleucyltyrosylasparaginylglutaminylasparaginylthreonylphenylalanylglutamylserylmethionylserylglycylleucylvalyltryptophylthreonylserylalanylprolylalanyltitinmethionylglutaminylarginyltyrosylglutamylserylleucylphenylalanylalanylisoleucylcysteinylprolylprolylaspartylalanylaspartylaspartylaspartylleucylleucylarginylglutaminylisoleucylalanylseryltyrosylglycylarginylglycyltyrosylthreonyltyrosylleucylleucylserylarginylalanylglycylvalylthreonylglycylalanylglutamylasparaginylarginylalanylalanylleucylprolylleucylasparaginylhistidylleucylvalylalanyllysylleucyllysylglutamyltyrosylasparaginylalanylalanylprolylprolylleucylglutaminylglycylphenylalanylglycylisoleucylserylalanylprolylaspartylglutaminylvalyllysylalanylalanylisoleucylaspartylalanylglycylalanylalanylglycylalanylisoleucylserylglycylserylalanylisoleucylvalyllysylisoleucylisoleucylglutamylglutaminylhistidylasparaginylisoleucylglutamylprolylglutamyllysylmethionylleucylalanylalanylleucyllysylvalylphenylalanylvalylglutaminylprolylmethionyllysylalanylalanylthreonylarginylacetylseryltyrosylserylisoleucylthreonylserylprolylserylglutaminylphenylalanylvalylphenylalanylleucylserylserylvalyltryptophylalanylaspartylprolylisoleucylglutamylleucylleucylasparaginylvalylcysteinylthreonylserylserylleucylglycylasparaginylglutaminylphenylalanylglutaminylthreonylglutaminylglutaminylalanylarginylthreonylthreonylglutaminylvalylglutaminylglutaminylphenylalanylserylglutaminylvalyltryptophyllysylprolylphenylalanylprolylglutaminylserylthreonylvalylarginylphenylalanylprolylglycylaspartylvalyltyrosyllysylvalyltyrosylarginyltyrosylasparaginylalanylvalylleucylaspartylprolylleucylisoleucylthreonylalanylleucylleucylglycylthreonylphenylalanylaspartylthreonylarginylasparaginylarginylisoleucylisoleucylglutamylvalylglutamylasparaginylglutaminylglutaminylserylprolylthreonylthreonylalanylglutamylthreonylleucylaspartylalanylthreonylarginylarginylvalylaspartylaspartylalanylthreonylvalylalanylisoleucylarginylserylalanylasparaginylisoleucylasparaginylleucylvalylasparaginylglutamylleucylvalylarginylglycylthreonylglycylleucyltyrosylasparaginylglutaminylasparaginylthreonylphenylalanylglutamylserylmethionylserylglycylleucylvalyltryptophylthreonylserylalanylproly",
+                "dragon", "castle", "forest", "wizard", "knight", "treasure", "crown", "shield", "sword", "princess", "planet", "galaxy", "asteroid", "comet", "rocket", "nebula", "eclipse", "satellite", "gravity", "orbit", "butterfly", "beetle", "spider", "ant", "bee", "worm", "fly", "mosquito", "cricket", "caterpillar", "desert", "island", "mountain", "valley", "plateau", "canyon", "volcano", "prairie", "jungle", "tundra", "coffee", "tea", "milk", "juice", "water", "soda", "lemonade", "smoothie", "hotdog", "popcorn", "helmet", "gloves", "boots", "jacket", "scarf", "umbrella", "goggles", "backpack", "hat", "sunglasses", "violin", "piano", "guitar", "flute", "drums", "trumpet", "harp", "banjo", "cello", "saxophone", "hammer", "screwdriver", "wrench", "pliers", "drill", "saw", "ladder", "tape", "nails", "level",
+                "apple", "banana", "cherry", "grape", "orange", "peach", "plum", "melon", "kiwi", "mango", "table", "chair", "sofa", "desk", "lamp", "shelf", "bed", "couch", "stool", "drawer", "ocean", "river", "lake", "pond", "stream", "waterfall", "bay", "sea", "fjord", "lagoon", "happy", "sad", "angry", "excited", "bored", "tired", "scared", "nervous", "calm", "confused", "train", "plane", "car", "bus", "bike", "boat", "ship", "subway", "tram", "scooter", "pizza", "burger", "pasta", "salad", "soup", "steak", "sandwich", "taco", "sushi", "noodle", "cloud", "rain", "snow", "storm", "wind", "sun", "fog", "hail", "lightning", "thunder", "dog", "cat", "bird", "fish", "horse", "rabbit", "mouse", "snake", "turtle", "frog", "red", "blue", "green", "yellow", "purple", "orange", "pink", "brown", "black", "white", "book", "pen", "paper", "pencil", "eraser", "marker", "notebook", "folder", "ruler", "scissors",
+                "jungle", "tundra", "savanna", "meadow", "cave", "cliff", "reef", "delta", "fjord", "canyon", "lantern", "candle", "torch", "mirror", "clock", "vase", "radio", "pillow", "curtain", "carpet", "gorilla", "koala", "panda", "otter", "walrus", "dolphin", "eagle", "owl", "bat", "fox", "volcano", "earthquake", "hurricane", "tsunami", "avalanche", "blizzard", "drought", "flood", "whirlpool", "cyclone", "quartz", "emerald", "diamond", "ruby", "sapphire", "topaz", "opal", "garnet", "jade", "amber", "wizard", "witch", "sorcerer", "fairy", "elf", "troll", "ogre", "dragon", "phoenix", "unicorn", "rocket", "spaceship", "satellite", "planet", "asteroid", "meteor", "galaxy", "cosmos", "nebula", "orbit", "laptop", "keyboard", "mouse", "monitor", "printer", "headphones", "microphone", "camera", "tablet", "charger", "soccer", "baseball", "cricket", "tennis", "badminton", "volleyball", "rugby", "hockey", "chess", "bowling", "violin", "guitar", "piano", "trumpet", "flute", "drums", "harp", "banjo", "cello", "clarinet"]
+        await ctx.send("Welcome to hangman.")
+        await ctx.send("Guess the letters in the word")
+        await ctx.send("and guess the word once you know it")
+        await ctx.send("You have 10 tries before the man hangs i guess, ts pmo icl")
+        await ctx.send("use the command:")
+        await ctx.send("hguess + your guess letter (ONLY ONE)")
+        await ctx.send("to guess")
+        guessword = random.choice(words)
+        IsGameStarted = 1
+        HguessWord = []
+    else:
+        await ctx.send("A game is in progress")
+        #admin instructions: if you wanna reset all games, restart the bot -Maker of the )! bots
+
 # The '$go' command
 @bot.command()
 async def go(ctx):
@@ -78,10 +120,57 @@ async def go(ctx):
     else:
         await ctx.send("Failed to upload an image of the pokémon.")
 
+
+@bot.command()
+async def foodrate(ctx):
+    await ctx.send("IS YOUR FOOD GOOD?")
+    if ctx.message.attachments:
+        for attachment in ctx.message.attachments:
+            file_name = attachment.filename
+            #file_url = attachment.url IF URL
+            await attachment.save(f"./safetodo/{file_name}")
+            rate = (get_class(model_path="./keras_model.h5", labels_path="./labels.txt", image_path=f"safetodo/{file_name}"))
+            print(rate)
+            label = rate[0]
+            confidence = rate[1]
+            print(label)
+            labelC = label.replace("\n", "")
+            print(labelC)
+            print(confidence)            
+            if labelC == "Yummy food":
+                await ctx.send("Its Good")
+            elif labelC == "Disgusting Food":
+                await ctx.send("Its NOT, it Sucks")
+
+    else:    
+        await ctx.send("No Food detected. send a food image with the command so that i can rate it")
 @bot.command()
 async def multiply(ctx, left: int, right: int):
     """Adds two numbers together."""
     await ctx.send(left * right)
+
+#show local file
+@bot.command()
+async def showfile(ctx, filename):
+  """Sends a file as an attachment."""
+  folder_path = "./nest/"
+  file_path = os.path.join(folder_path, filename)
+  try:
+    await ctx.send(file=discord.File(file_path))
+  except FileNotFoundError:
+    await ctx.send(f"File '{filename}' not found.")
+
+# upload file to local computer
+@bot.command()
+async def simpan(ctx):
+    if ctx.message.attachments:
+        for attachment in ctx.message.attachments:
+            file_name = attachment.filename
+            # file_url = attachment.url  IF URL
+            await attachment.save(f"./nest/{file_name}")
+            await ctx.send(f"Menyimpan {file_name}")
+    else:
+        await ctx.send("Anda lupa mengunggah :(")
 
 @bot.command()
 async def by(ctx, left: int, right: int):
@@ -108,6 +197,33 @@ async def dog(ctx):
     '''Setiap kali permintaan dog (anjing) dipanggil, program memanggil fungsi get_dog_image_url'''
     image_url = get_dog_image_url()
     await ctx.send(image_url)
+
+#show local drive    
+@bot.command()
+async def local_drive(ctx):
+    try:
+      folder_path = "nest"  # Replace with the actual folder path
+      files = os.listdir(folder_path)
+      file_list = "\n".join(files)
+      await ctx.send(f"Files in the files folder:\n{file_list}")
+    except FileNotFoundError:
+      await ctx.send("Folder not found.")
+
+
+#Computer Vision Deteksi objek
+@bot.command()
+async def deteksi(ctx):
+    if ctx.message.attachments:
+        for attachment in ctx.message.attachments:
+            file_name = attachment.filename
+            #file_url = attachment.url IF URL
+            await attachment.save(f"./CV/{file_name}")
+            await ctx.send(detect(input_image=f"./CV/{file_name}", output_image=f"./CV/{file_name}", model_path="yolov3.pt"))
+            with open(f'CV/{file_name}', 'rb') as f:
+                picture = discord.File(f)
+            await ctx.send(file=picture)
+    else:
+        await ctx.send("Anda lupa mengunggah gambar :(")
 
 
 def get_duck_image_url():
@@ -215,4 +331,4 @@ async def joined(ctx, member: discord.Member):
     # provide what you can help here
 
 
-bot.run('LaLaLALAlAl12LAlAlAlla')
+bot.run('No you dont')
