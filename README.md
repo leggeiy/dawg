@@ -1,15 +1,17 @@
-# D-shield-minus
+# Dawg
 a discord bot, made for my python course
 
 
 more-info
-this is D)!
-and yes, its said as d shield minus
+a dog
 its cool
 it can do stuff like rolling dice and flipping coins
 but there is also easter eggs
 
 commands
+
+to use, add $ to:
+
 (excluding eastsers)
 add (adds numbers)
 subtract (subtracts numbers)
@@ -30,4 +32,6 @@ sos (help, gives you info)
 coinflip (flip a coin)
 dice (dice)
 joined (says when someone joins, it was preincluded and doesnt work though)
+foodrate (rates your food trough AI)
+rockpaperscissors (tock, peper, scissors)
 the hidden one (mem) (we dont know what it does)
