@@ -63,6 +63,10 @@ to use, add $ to:
 
 the main file
 
+discord.py
+
+so that the bot discords
+
 the different other files
 
 uhhh
