@@ -51,13 +51,13 @@ to use, add $ to:
 
 -dice (dice)
 
--joined (says when someone joins, it was preincluded and doesnt work though)
+-joined (says when someone joins)
 
 -foodrate (rates your food trough AI)
 
 -rockpaperscissors (tock, peper, scissors)
 
--the hidden one (mem) (we dont know what it does)
+-climatrivia (talks about climate change (its real))
 
 ### stuff you need
 
