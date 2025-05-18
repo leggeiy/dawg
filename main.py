@@ -19,6 +19,12 @@ module.
 There are a number of utility commands being showcased here.'''
 
 yummyeyes = "i see the eyes"
+dood = 2648
+q = ""
+hdeath = 0
+
+IsGameStarted = 0
+HguessWord = []
 
 intents = discord.Intents.default()
 intents.members = True
@@ -81,10 +87,13 @@ async def rockpaperscissors(ctx, hand):
     elif (phand == "rock" and machine == "paper") or (phand == "paper" and machine == "scissors") or (phand == "scissors" and machine == "rock"):
         await ctx.send("you lose L")
     else:
-        await ctx.send("pluh")
+        await ctx.send("ooie gooie, you need to pick rock, paper or scissors you silly mongoose")
     
 @bot.command()
 async def hangman(ctx):
+    global IsGameStarted
+    global HguessWord
+    global guessword
     if IsGameStarted != 1:
         words = ["name", "discord", "superb", "pneumonoultramicroscopicsilicovolcanoconiosis", "Methionylglutaminylarginyltyrosylglutamylserylleucylphenylalanylvalylprolylphenylalanylvalylthreonylleucylglycylaspartylprolylglycylisoleucylglutamylglutaminylserylleucyllysylisoleucylaspartylthreonylleucylisoleucylglutamylalanylglycylalanylaspartylalanylleucylglutamylleucylglycylisoleucylprolylphenylalanylserylaspartylprolylleucylalanylaspartylglycylprolylthreonylisoleucylglutaminylasparaginylalanylthreonylleucylarginylalanylphenylalanylalanylalanylglycylvalylthreonylprolylalanylglutaminylcysteinylphenylalanylglutamylmethionylleucylalanylleucylisoleucylarginylglutaminyllysylhistidylprolylthreonylisoleucylprolylisoleucylglycylleucylleucylmethionyltyrosylalanylasparaginylleucylvalylphenylalanylasparaginyllysylglycylisoleucylaspartylglutamylphenylalanyltyrosylalanylglutaminylcysteinylglutamyllysylvalylglycylvalylaspartylserylvalylleucylvalylalanylaspartylvalylprolylvalylglutaminylglutamylserylalanylprolylphenylalanylarginylglutaminylalanylalanylleucylarginylhistidylasparaginylvalylalanylprolylisoleucylphenylalanylisoleucylcysteinylprolylprolylaspartylalanylaspartylaspartylaspartylleucylleucylarginylglutaminylisoleucylalanylseryltyrosylglycylarginylglycyltyrosylthreonyltyrosylleucylleucylserylarginylalanylglycylvalylthreonylglycylalanylglutamylasparaginylarginylalanylalanylleucylprolylleucylasparaginylhistidylleucylvalylalanyllysylleucyllysylglutamyltyrosylasparaginylalanylalanylprolylprolylleucylglutaminylglycylphenylalanylglycylisoleucylserylalanylprolylaspartylglutaminylvalyllysylalanylalanylisoleucylaspartylalanylglycylalanylalanylglycylalanylisoleucylserylglycylserylalanylisoleucylvalyllysylisoleucylisoleucylglutamylglutaminylhistidylasparaginylisoleucylglutamylprolylglutamyllysylmethionylleucylalanylalanylleucyllysylvalylphenylalanylvalylglutaminylprolylmethionyllysylalanylalanylthreonylarginylacetylseryltyrosylserylisoleucylthreonylserylprolylserylglutaminylphenylalanylvalylphenylalanylleucylserylserylvalyltryptophylalanylaspartylprolylisoleucylglutamylleucylleucylasparaginylvalylcysteinylthreonylserylserylleucylglycylasparaginylglutaminylphenylalanylglutaminylthreonylglutaminylglutaminylalanylarginylthreonylthreonylglutaminylvalylglutaminylglutaminylphenylalanylserylglutaminylvalyltryptophyllysylprolylphenylalanylprolylglutaminylserylthreonylvalylarginylphenylalanylprolylglycylaspartylvalyltyrosyllysylvalyltyrosylarginyltyrosylasparaginylalanylvalylleucylaspartylprolylleucylisoleucylthreonylalanylleucylleucylglycylthreonylphenylalanylaspartylthreonylarginylasparaginylarginylisoleucylisoleucylglutamylvalylglutamylasparaginylglutaminylglutaminylserylprolylthreonylthreonylalanylglutamylthreonylleucylaspartylalanylthreonylarginylarginylvalylaspartylaspartylalanylthreonylvalylalanylisoleucylarginylserylalanylasparaginylisoleucylasparaginylleucylvalylasparaginylglutamylleucylvalylarginylglycylthreonylglycylleucyltyrosylasparaginylglutaminylasparaginylthreonylphenylalanylglutamylserylmethionylserylglycylleucylvalyltryptophylthreonylserylalanylprolylalanyltitinmethionylglutaminylarginyltyrosylglutamylserylleucylphenylalanylalanylisoleucylcysteinylprolylprolylaspartylalanylaspartylaspartylaspartylleucylleucylarginylglutaminylisoleucylalanylseryltyrosylglycylarginylglycyltyrosylthreonyltyrosylleucylleucylserylarginylalanylglycylvalylthreonylglycylalanylglutamylasparaginylarginylalanylalanylleucylprolylleucylasparaginylhistidylleucylvalylalanyllysylleucyllysylglutamyltyrosylasparaginylalanylalanylprolylprolylleucylglutaminylglycylphenylalanylglycylisoleucylserylalanylprolylaspartylglutaminylvalyllysylalanylalanylisoleucylaspartylalanylglycylalanylalanylglycylalanylisoleucylserylglycylserylalanylisoleucylvalyllysylisoleucylisoleucylglutamylglutaminylhistidylasparaginylisoleucylglutamylprolylglutamyllysylmethionylleucylalanylalanylleucyllysylvalylphenylalanylvalylglutaminylprolylmethionyllysylalanylalanylthreonylarginylacetylseryltyrosylserylisoleucylthreonylserylprolylserylglutaminylphenylalanylvalylphenylalanylleucylserylserylvalyltryptophylalanylaspartylprolylisoleucylglutamylleucylleucylasparaginylvalylcysteinylthreonylserylserylleucylglycylasparaginylglutaminylphenylalanylglutaminylthreonylglutaminylglutaminylalanylarginylthreonylthreonylglutaminylvalylglutaminylglutaminylphenylalanylserylglutaminylvalyltryptophyllysylprolylphenylalanylprolylglutaminylserylthreonylvalylarginylphenylalanylprolylglycylaspartylvalyltyrosyllysylvalyltyrosylarginyltyrosylasparaginylalanylvalylleucylaspartylprolylleucylisoleucylthreonylalanylleucylleucylglycylthreonylphenylalanylaspartylthreonylarginylasparaginylarginylisoleucylisoleucylglutamylvalylglutamylasparaginylglutaminylglutaminylserylprolylthreonylthreonylalanylglutamylthreonylleucylaspartylalanylthreonylarginylarginylvalylaspartylaspartylalanylthreonylvalylalanylisoleucylarginylserylalanylasparaginylisoleucylasparaginylleucylvalylasparaginylglutamylleucylvalylarginylglycylthreonylglycylleucyltyrosylasparaginylglutaminylasparaginylthreonylphenylalanylglutamylserylmethionylserylglycylleucylvalyltryptophylthreonylserylalanylproly",
                 "dragon", "castle", "forest", "wizard", "knight", "treasure", "crown", "shield", "sword", "princess", "planet", "galaxy", "asteroid", "comet", "rocket", "nebula", "eclipse", "satellite", "gravity", "orbit", "butterfly", "beetle", "spider", "ant", "bee", "worm", "fly", "mosquito", "cricket", "caterpillar", "desert", "island", "mountain", "valley", "plateau", "canyon", "volcano", "prairie", "jungle", "tundra", "coffee", "tea", "milk", "juice", "water", "soda", "lemonade", "smoothie", "hotdog", "popcorn", "helmet", "gloves", "boots", "jacket", "scarf", "umbrella", "goggles", "backpack", "hat", "sunglasses", "violin", "piano", "guitar", "flute", "drums", "trumpet", "harp", "banjo", "cello", "saxophone", "hammer", "screwdriver", "wrench", "pliers", "drill", "saw", "ladder", "tape", "nails", "level",
@@ -93,16 +102,104 @@ async def hangman(ctx):
         await ctx.send("Welcome to hangman.")
         await ctx.send("Guess the letters in the word")
         await ctx.send("and guess the word once you know it")
-        await ctx.send("You have 10 tries before the man hangs i guess, ts pmo icl")
+        await ctx.send("You have 10 tries before the man hangs i guess")
         await ctx.send("use the command:")
         await ctx.send("hguess + your guess letter (ONLY ONE)")
         await ctx.send("to guess")
         guessword = random.choice(words)
         IsGameStarted = 1
-        HguessWord = []
+        HguessWord = ['?'] * len(guessword)
+        print(guessword)
     else:
         await ctx.send("A game is in progress")
-        #admin instructions: if you wanna reset all games, restart the bot -Maker of the )! bots
+
+
+@bot.command()
+async def hguess(ctx, letter: str):
+    global IsGameStarted
+    global HguessWord
+    global guessword
+    global hdeath
+    if IsGameStarted == 1:
+        await ctx.send(letter)
+        for i in range(len(guessword)):
+            if letter in guessword[i]:
+                HguessWord[i] = letter
+                joined = "".join(HguessWord)
+                await ctx.send(f"Correct, Currently, the Word is {joined}")
+        if letter not in guessword:
+            joined = "".join(HguessWord)
+            await ctx.send(f"No letter in word, Currently, the Word is {joined}")
+            nameme = "you have ", (6 - hdeath), "tries"
+            await ctx.send(nameme)
+            if hdeath == 1:
+                await ctx.send("the man now has his head D:")
+            elif hdeath == 2:
+               await ctx.send("the man now has his head and body")
+            elif hdeath == 3:
+                await ctx.send("the man now has his head, body and right arm")                    
+            elif hdeath == 4:
+                await ctx.send("the man now has his head, body, and arms")
+            elif hdeath == 5:
+                await ctx.send("the man now has his head, body, arms, and legs")
+            elif hdeath == 6:
+                await ctx.send("THE MAN IS DEAD, YOU KILLED HIM, YOU MONSTER!, oh, also the word is ", guessword)
+
+    elif IsGameStarted == 0:
+        print("nah")
+        await ctx.send("start a game of hangman first")
+
+@bot.command()
+async def climatrivia(ctx):
+    global dood
+    global q
+    await ctx.send("Welcome to Climate Trivia!")
+    await ctx.send("Answer questions if you are smart, BET.")
+    questions = {
+        "Which year was the hottest recorded on Earth? 1. 2024, 2. 2024, 3. 2016": 4,
+        "Is climate change different from global warming? 1. Yes, 2. No": 1,
+        "Is Leggeiy a cool guy? 1. Yes, 2. No, 3. Maybe": 1,
+        "What percentage of global greenhouse gas emissions come from deforestation? 1. 10%, 2. 20%, 3. 30%": 2,
+        "Which of these natural disasters has increased due to climate change? 1. Hurricanes, 2. Earthquakes, 3. Volcanic eruptions": 1,
+        "What is the main cause of rising sea levels? 1. Melting glaciers, 2. Underwater earthquakes, 3. Increased rainfall": 1,
+        "What greenhouse gas is most responsible for global warming? 1. Nitrogen, 2. Carbon dioxide, 3. Oxygen": 2,
+        "What is a major consequence of climate change for coral reefs? 1. Increased growth, 2. Bleaching, 3. Better habitat conditions": 2,
+        "Which energy source produces the least greenhouse gas emissions? 1. Coal, 2. Solar, 3. Natural gas": 2,
+        "Which country emits the most carbon dioxide annually? 1. USA, 2. China, 3. India": 2,
+        "What is the primary cause of climate change? 1. Deforestation, 2. Burning fossil fuels, 3. Increased volcanic activity": 2,
+        "Which gas is released when permafrost thaws due to climate change? 1. Ozone, 2. Nitrous oxide, 3. Methane": 3,
+        "What percentage of global greenhouse gas emissions come from the transportation sector? 1. 14%, 2. 25%, 3. 33%": 1,
+        "Which of the following is NOT an effect of climate change? 1. More frequent heatwaves, 2. Ocean acidification, 3. Increased volcanic activity": 3,
+        "What is the current concentration of carbon dioxide in the atmosphere (as of 2024)? 1. Around 390 ppm, 2. Around 414 ppm, 3. Around 450 ppm": 2
+    }
+    q = random.choice(list(questions.items()))
+    print(q[1])
+    await ctx.send(q[0])
+    message = await ctx.send("Reply To This Message with 1️⃣ or 2️⃣ or 3️⃣")
+    dood = message.id
+    print(dood)
+@bot.event
+async def on_reaction_add(reaction, user):
+    global dood
+    global q
+    if user.bot:
+        return
+    elif dood and reaction.message.id == dood:
+        if reaction.emoji == "1️⃣":
+            if q[1] == 1:
+                await reaction.message.channel.send("You Are Correct!!!!1!!")
+            else:
+                await reaction.message.channel.send("you wrong so sad boo")
+        if reaction.emoji == "2️⃣":
+            if q[1] == 2:
+                await reaction.message.channel.send("You Are Correct!!!!1!!")
+            else:
+                await reaction.message.channel.send("you wrong so sad boo")
+        if reaction.emoji == "3️⃣":
+            if q[1] == 3:
+                await reaction.message.channel.send("You Are Correct!!!!1!!")
+            else:
+                await reaction.message.channel.send("you wrong so sad boo")
 
 # The '$go' command
 @bot.command()
@@ -285,8 +382,20 @@ async def pw(ctx):
     await ctx.send(f'Kata sandi yang dihasilkan: {gen_pass(10)}')
 
 @bot.command()
-async def sos(ctx):
-    await ctx.send(f'if you need help, contact nownotnow2000@proton.me, this bot is (mostly) not my code')
+async def sos(ctx, page: int = 0):
+    await ctx.send('Welcome to the list of commands')
+    await ctx.send("Use SOS and 0 to 2 for more commands")
+    if page == 1:
+        await ctx.send("-tulis (writes stuff to my computer or your computer or his computer) -tambahkan (im indonesian, also, this adds stuff to said computer file) -baca (reads file) -meme (gives you a random meme) -animeme (animal memes)- -pw (makes passwords) -sos (help, gives you info) -coinflip (flip a coin) -dice (dice)")
+    elif page == 2:
+        await ctx.send("-foodrate (rates your food trough AI) -rockpaperscissors (tock, peper, scissors)")
+    elif page == 0:
+        await ctx.send("-add (adds numbers) -subtract (subtracts numbers) -div (divides numbers) -multiply (multiplies numeros) -by (idk) -go (pokemon) -repeat (repeats a message) -dog (shows dog) -duck (duck) -climatrivia (gives you random trivia questions)")
+    
+
+@bot.command()
+async def fightclub(ctx, fighter: str = "")
+
 
 # coinflip
 @bot.command()
@@ -314,15 +423,6 @@ async def dice(ctx):
     elif nums == 6:
         await ctx.send('It is 6!')
 
-# @bot.command()
-# async def mem(ctx):
-#     # try by your self 2 min
-#     img_name = random.choice(os.listdir('images'))
-#     with open(f'images/{img_name}', 'rb') as f:
-#         picture = discord.File(f)
- 
-#     await ctx.send(file=picture)
-
 # welcome message
 @bot.command()
 async def joined(ctx, member: discord.Member):
@@ -331,4 +431,4 @@ async def joined(ctx, member: discord.Member):
     # provide what you can help here
 
 
-bot.run('No you dont')
+bot.run('secret sausage, put your own secret sausage key here')
